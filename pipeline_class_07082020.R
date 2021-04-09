@@ -922,7 +922,7 @@ BiostatsSingleCell =
               ls.mod1 <- emmeans(ancova , pairwise ~ '.GrouP')
               resw <- as.data.frame(summary(ls.mod1, type = "response", infer = TRUE))
                 a_p_val <- summary(ancova)$coefficients[group_label, 4]
-                a_FC <- resw$emmeans.emmean[[1]]/resw$emmeans.emmean[[2]]
+                a_FC <- resw$emmeans.emmean[[2]]/resw$emmeans.emmean[[1]]
                 a_log2FC = log2(a_FC)
                 a_log2FC[is.infinite(a_log2FC)] = NA
                 a_log2FC[is.nan(a_log2FC)] = NA
