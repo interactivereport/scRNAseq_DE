@@ -16,6 +16,7 @@ suppressMessages(library(foreach))
 suppressMessages(library(doMC))
 suppressMessages(library(biomaRt))
 suppressMessages(library(emmeans))
+suppressMessages(library(nebula))
 
 # ---------------------
 # make helper functions
@@ -1386,8 +1387,9 @@ BiostatsSingleCell =
               return(res_frame %>% dplyr:::arrange(FDR))
             },
             # run nebula pipeline 
-            nebula_pipeline = function(covs = NULL, method = NULL) { ##LP
+            nebula_pipeline = function(covs = NULL, method = "HL") { ##LP
               stopifnot(is.null(covs) | is.character(covs))
+              stopifnot(is.character(method) & method %in% c("LN", "HL"))
 
               libsizes <- private$lib_sizes
               meta_data <- private$meta_data
@@ -1413,12 +1415,20 @@ BiostatsSingleCell =
               re = nebula(private$counts[, col_index],meta_data[,private$sampleId_col],pred=df,offset=libsizes[col_index], method = method)  ##LP
               final_table = data.frame("ID" = re$summary[,"gene"],re$summary[,grep("GrouP",colnames(re$summary))])
               colnames(final_table) = c("ID","logFC","se","Pvalue")
+
+              if(method == "LN")
+              {
+                final_table = cbind(final_table, algorithm = re$algorithm)
+              } else { 
+                final_table = cbind(final_table, algorithm = "HL") 
+              }
+
               final_table$log2FC = log2(exp(final_table$logFC))
               final_table$FDR = p.adjust(final_table[,"Pvalue"],method="fdr")
 
               private$de_results[["NEBULA"]] <- final_table
               private$de_method = "NEBULA"
-              return(final_table[,c(1,5,4,6)] %>% dplyr::arrange(FDR))
+              return(final_table[,c(1,6,4,7,5)] %>% dplyr::arrange(FDR))
             },
             # run glmmTMB pipeline
             # return sorted results
