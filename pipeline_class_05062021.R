@@ -1393,6 +1393,13 @@ BiostatsSingleCell =
 
               libsizes <- private$lib_sizes
               meta_data <- private$meta_data
+              counts <- private$counts
+
+              # Nebula assumes that "the cells of the same subject have to be grouped!!!"
+              order_ids <- order(meta_data[, private$sampleId_col])
+              libsizes <- libsizes[order_ids]
+              meta_data <- meta_data[order_ids, ]
+              counts <- counts[ ,order_ids]
 
               if (!is.null(covs)) {
                 try(if(all(covs %in% names(meta_data)) == FALSE) stop("Error: can not find all covariates from the meta data!"))
@@ -1412,7 +1419,7 @@ BiostatsSingleCell =
               fml = paste0(" ~ ", paste(c('.GrouP',covs),collapse = " + "))  ##LP
               df = model.matrix(as.formula(fml),data=meta_data)
 
-              re = nebula(private$counts[, col_index],meta_data[,private$sampleId_col],pred=df,offset=libsizes[col_index], method = method)  ##LP
+              re = nebula(private$counts[, col_index], meta_data[, private$sampleId_col], pred = df, offset = libsizes[col_index], method = method)  ##LP
               final_table = data.frame("ID" = re$summary[,"gene"],re$summary[,grep("GrouP",colnames(re$summary))])
               colnames(final_table) = c("ID","logFC","se","Pvalue")
 
