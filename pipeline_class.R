@@ -1,5 +1,6 @@
 #------- Load needed packages ---------------
 suppressMessages(library(data.table))
+suppressMessages(library(dplyr))
 suppressMessages(library(glue))
 suppressMessages(library(SingleCellExperiment))
 suppressMessages(library(edgeR))
@@ -346,26 +347,26 @@ BiostatsSingleCell =
                 hist(sce$pct_counts_in_top_50_features,breaks=20,main="Percentage of top 50 features")
               }
               
-              # How many cells/percentage of cells have UMI count > 1 for each gene
+              # How many cells/percentage of cells have UMI count > 0 for each gene
               par(mfrow=c(1,2))
-              cellnum = apply_sparseMatrix(private$counts, 1, function(x) sum(x>1, na.rm = TRUE))
-              hist(cellnum, breaks = 20, main = "# of cells with UMI > 1 for each gene",
-                   xlab="# of cells with UMI count > 1")
+              cellnum = apply_sparseMatrix(private$counts, 1, function(x) sum(x>0, na.rm = TRUE))
+              hist(cellnum, breaks = 20, main = "# of cells with UMI > 0 for each gene",
+                   xlab="# of cells with UMI count > 0")
               
-              cellperc = apply_sparseMatrix(private$counts, 1, function(x) sum(x>1, na.rm = TRUE))/length(private$cells)*100
-              hist(cellperc, breaks = 20, main = "% of cells with UMI > 1 for each gene",
-                   xlab="percentage of cells with UMI count > 1")
+              cellperc = apply_sparseMatrix(private$counts, 1, function(x) sum(x>0, na.rm = TRUE))/length(private$cells)*100
+              hist(cellperc, breaks = 20, main = "% of cells with UMI > 0 for each gene",
+                   xlab="percentage of cells with UMI count > 0")
               
               if (length(private$MT_rows)>0)
               {
                 par(mfrow=c(1,2))
-                cellnum = apply_sparseMatrix(private$counts[-private$MT_rows,], 1, function(x) sum(x>1, na.rm = TRUE))
-                hist(cellnum, breaks = 20, main = "# of cells with UMI > 1 for each gene",
-                     sub="excluded MT genes",xlab="# of cells with UMI count > 1")
+                cellnum = apply_sparseMatrix(private$counts[-private$MT_rows,], 1, function(x) sum(x>0, na.rm = TRUE))
+                hist(cellnum, breaks = 20, main = "# of cells with UMI > 0 for each gene",
+                     sub="excluded MT genes",xlab="# of cells with UMI count > 0")
                 
-                cellperc = apply_sparseMatrix(private$counts[-private$MT_rows,], 1, function(x) sum(x>1, na.rm = TRUE))/length(private$cells)*100
-                hist(cellperc, breaks = 20, main = "% of cells with UMI > 1 for each gene",
-                     sub="excluded MT genes",xlab="percentage of cells with UMI count > 1")
+                cellperc = apply_sparseMatrix(private$counts[-private$MT_rows,], 1, function(x) sum(x>0, na.rm = TRUE))/length(private$cells)*100
+                hist(cellperc, breaks = 20, main = "% of cells with UMI > 0 for each gene",
+                     sub="excluded MT genes",xlab="percentage of cells with UMI count > 0")
               }
               
               # How many cells per subject
@@ -420,11 +421,11 @@ BiostatsSingleCell =
                 private$counts = private$counts[-private$MT_rows, , drop = FALSE]
                 private$genes = private$genes[-private$MT_rows]
                 private$MT_rows = NULL
-                private$filter_info[["MT_gene"]]<-private$genes[private$MT_rows]    # add by Grace
+                private$filter_info[["MT_gene"]]<-private$genes[private$MT_rows]
               }
               
               # remove bad genes
-              cell_num = apply_sparseMatrix(private$counts, 1, function(x) sum(x>1, na.rm = TRUE))
+              cell_num = apply_sparseMatrix(private$counts, 1, function(x) sum(x>0, na.rm = TRUE))
               
               if (perc_filter)
               {
@@ -432,7 +433,7 @@ BiostatsSingleCell =
               }
               
               bad_genes = which(cell_num < min.cells.per.gene)
-              private$filter_info[["less_cell_num"]]<-private$genes[bad_genes]    # add by Grace
+              private$filter_info[["less_cell_num"]] <- private$genes[bad_genes]
               if (length(bad_genes) > 0)
               {
                 private$counts = private$counts[-bad_genes, , drop = FALSE]
@@ -548,7 +549,7 @@ BiostatsSingleCell =
               }
               
               # remove bad genes
-              cell_num = apply_sparseMatrix(private$counts, 1, function(x) sum(x>1, na.rm = TRUE))
+              cell_num = apply_sparseMatrix(private$counts, 1, function(x) sum(x>0, na.rm = TRUE))
               
               if (perc_filter)
               {
@@ -556,7 +557,7 @@ BiostatsSingleCell =
               }
               
               bad_genes = which(cell_num < min.cells.per.gene)
-              private$filter_info[["less_cell_num"]]<-private$genes[bad_genes]    # add by Grace
+              private$filter_info[["less_cell_num"]] <- private$genes[bad_genes]
               if (length(bad_genes) > 0)
               {
                 filter_counts = filter_counts[-bad_genes, ,drop = FALSE]
@@ -655,8 +656,10 @@ BiostatsSingleCell =
               ref_index = which(private$meta_data[, private$treatment_col] %in% ref_group)
               alt_index = which(private$meta_data[, private$treatment_col] %in% alt_group)
               stopifnot(length(intersect(ref_index, alt_index))==0) 
-              stopifnot(length(intersect(ref_index, which(cluster_index)))>0) 
-              stopifnot(length(intersect(alt_index, which(cluster_index)))>0) 
+              try(if(length(intersect(ref_index, which(cluster_index)))==0) stop("Error, 0 cell in the reference group!"))
+              # stopifnot(length(intersect(ref_index, which(cluster_index)))>0) 
+              try(if(length(intersect(alt_index, which(cluster_index)))==0) stop("Error, 0 cell in the alternative group!"))
+              # stopifnot(length(intersect(alt_index, which(cluster_index)))>0) 
               
               private$meta_data$.GrouP[ref_index] <- "ref"
               private$meta_data$.GrouP[alt_index] <- "alt"
@@ -763,8 +766,8 @@ BiostatsSingleCell =
                   message(paste0("Minimum cells per gene was set to ", min.cells.per.gene))
                 }
                 
-                placebo_count = apply_sparseMatrix(filter_counts[,intersect(cluster_index, placebo_index)], 1, function(x) sum(x > 1, na.rm = T))
-                treated_count = apply_sparseMatrix(filter_counts[,intersect(cluster_index, treated_index)], 1, function(x) sum(x > 1, na.rm = T))
+                placebo_count = apply_sparseMatrix(filter_counts[,intersect(cluster_index, placebo_index)], 1, function(x) sum(x > 0, na.rm = T))
+                treated_count = apply_sparseMatrix(filter_counts[,intersect(cluster_index, treated_index)], 1, function(x) sum(x > 0, na.rm = T))
                 if (min.cells.per.gene.type == "and") bad_genes = which(placebo_count < min.cells.per.gene | treated_count < min.cells.per.gene)
                 if (min.cells.per.gene.type == "or") bad_genes = which(placebo_count < min.cells.per.gene & treated_count < min.cells.per.gene)
                 private$filter_info[["less_per_cell_num_group"]]<-filter_genes[bad_genes]    # add by Grace 
