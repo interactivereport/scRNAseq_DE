@@ -1425,7 +1425,7 @@ BiostatsSingleCell =
                     data_g = group_cell(count=counts[, col_index],id=meta_data[, private$sampleId_col],pred=df)
                     if(is.null(data_g)){
                         re = nebula(counts[, col_index], meta_data[, private$sampleId_col], pred = df, offset = libsizes[col_index], method = method) ##LP
-                    else{
+                    }else{
                         re = nebula(data_g$count,data_g$id,pred=data_g$pred, offset = libsizes[colnames(data_g$count)], method = method)  ##LP
                     }
                     final_table = data.frame("ID" = re$summary[,"gene"],re$summary[,grep("GrouP",colnames(re$summary))])
