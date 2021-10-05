@@ -16,7 +16,7 @@ for f in listdir(strPath):
   if (not isfile(join(strPath, f))) or ("csv" not in f):
     continue
   strCSV = join(strPath,f)
-  tab = pd.read_csv(strCSV)[['ID','log2FC','Pvalue','FDR']]
+  tab = pd.read_csv(strCSV).filter(regex="ID$|log2FC$|Pvalue$|FDR$") #[['ID','log2FC','Pvalue','FDR']]
   tab.columns = ["gene","log2fc","pval","qval"]
   tags = f[:-4].split("_")
   tab["contrast"] = tags[0]
