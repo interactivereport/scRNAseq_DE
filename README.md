@@ -19,7 +19,7 @@
 <h3 align="left">scDEpipelineR6</h3>
 
   <p align="left">
-    A web-based application interface for UK Biobank phenotype exploration
+    R code for performing scRNA-seq DE and evaluation of DE method performance using simulated data
     <br />
     <a href="https://github.com/mryals/scDEpipelineR6"><strong>Explore the docs »</strong></a>
     <br />
