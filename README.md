@@ -11,7 +11,6 @@
 *** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
-[![MIT License][license-shield]][license-url]
 
 <!-- PROJECT LOGO -->
 <br />
@@ -22,13 +21,13 @@
   <p align="left">
     A web-based application interface for UK Biobank phenotype exploration
     <br />
-    <a href="https://github.com/mryals/scDEpipelineR6"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/mryals/scDEpipelineR6"><strong>Explore the docs Â»</strong></a>
     <br />
     <br />
     <a href="https://github.com/mryals/scDEpipelineR6">View Demo</a>
-    ·
+    Â·
     <a href="https://github.com/mryals/scDEpipelineR6/issues">Report Bug</a>
-    ·
+    Â·
     <a href="https://github.com/mryals/scDEpipelineR6/issues">Request Feature</a>
   </p>
 </div>
@@ -128,5 +127,3 @@ Project Link: [https://github.com/mryals/scDEpipelineR6](https://github.com/mrya
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[license-shield]: https://img.shields.io/github/license/mryals/scDEpipelineR6.svg?style=for-the-badge
-[license-url]: https://github.com/mryals/scDEpipelineR6/blob/master/LICENSE
