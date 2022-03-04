@@ -114,7 +114,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 Jake Gagnon, Matthew Ryals, Lira Pi, Liping Hou, Qingwen Wan
 
-Contact: https://www.biogen.com/en_us/contact.html](https://www.biogen.com/en_us/contact.html)
+Contact: [https://www.biogen.com/en_us/contact.html](https://www.biogen.com/en_us/contact.html)
 
 Project Link: [https://github.com/interactivereport/scRNAseq_DE](https://github.com/interactivereport/scRNAseq_DE)
 
