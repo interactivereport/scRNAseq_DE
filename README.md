@@ -21,12 +21,7 @@
   <p align="left">
     R code for performing scRNA-seq DE and evaluation of DE method performance using simulated data
     <br />
-    <a href="https://github.com/mryals/scDEpipelineR6"><strong>Explore the docs »</strong></a>
     <br />
-    <br />
-    <a href="https://github.com/mryals/scDEpipelineR6">View Demo</a>
-    ·
-    <a href="https://github.com/mryals/scDEpipelineR6/issues">Report Bug</a>
     ·
     <a href="https://github.com/mryals/scDEpipelineR6/issues">Request Feature</a>
   </p>
@@ -82,7 +77,7 @@ It is recommended to use R/3.5 for this code.
 
 ```r
 library(devtools)
-devtools::install_github("mryals/scDEpipelineR6")
+devtools::install_github("interactivereport/scRNAseq_DE")
 ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -119,9 +114,9 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 Jake Gagnon, Matthew Ryals, Lira Pi, Liping Hou, Qingwen Wan
 
-Contact: [https://www.pharmalex.com/contact-us](https://www.pharmalex.com/contact-us)
+Contact: https://www.biogen.com/en_us/contact.html](https://www.biogen.com/en_us/contact.html)
 
-Project Link: [https://github.com/mryals/scDEpipelineR6](https://github.com/mryals/ukb_phenotype_dashboard)
+Project Link: [https://github.com/interactivereport/scRNAseq_DE](https://github.com/interactivereport/scRNAseq_DE)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
