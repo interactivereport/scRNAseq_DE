@@ -22,10 +22,14 @@ RNA-sequencing data. Currently this package can ingest count matrices as rds fil
 
 ## Example data
 ```{r load_data, eval=FALSE}
+library(scDEpipelineR6)
 
 #You will need some single cell data to use in your analysis
 #The DE pipeline allows multiple data input types
 #Note that the simulation function requires data to be in 10X CellRanger v2 format
+count_mtx
+
+meta_cell
 
 ```
 
@@ -34,7 +38,7 @@ RNA-sequencing data. Currently this package can ingest count matrices as rds fil
 ### Filtering
 ```{r setup, eval=FALSE}
 #Create your sce object
-sce <- BiostatsSingleCell$new(count_data = my_count,
+sce <- BiostatsSingleCell$new(count_data = count_mtx,
                               meta_data = my_meta_cell,
                               sampleId_col = "sample",
                               cluster_col = "cell_type",
@@ -56,8 +60,6 @@ sce_qc <- sce$apply_filter_contrasts_R6(min.cells.per.gene = 3, min.perc.cells.p
 ### DE analysis
 
 ```{r de_analysis, eval=FALSE}
-library(scDEpipelineR6)
-
 #Select some covariates to use in your DE analysis or simulation analysis
 covars <- c("age")
 
@@ -73,17 +75,17 @@ nebula.HL_results = sce_qc$nebula_pipeline(covs = covars,method="HL")$res.tab
 
 #Run a simulation run
 #Here we will simulate 3 DE simulations for nebula (HL method)
-de_result <- de_sim_v10(in_dir = "/home/mryals/scRNAseq/DERIVED_DATA",
-           gene_info_file = "GSE122960_gene_info.csv",
+de_result <- de_sim_v10(in_dir = "path_to_data",
+           gene_info_file = "gene_info.csv",
            gene_name_column = "index",
-           meta_file = "GSE122960_meta_subset_Disease_format.csv",
-           sample_column = "orig.ident",
-           cell_type_column = "integrated.data.active.ident",
-           cell_barcode_column = "prefix.cell",
-           contrast_column = "Disease",
-           contrast_ref_group = "Donor",
-           contrast_alt_group = "Fibro",
-           count_file = "GSE122960_count_subset.mtx",
+           meta_file = "metadata.csv",
+           sample_column = "sample",
+           cell_type_column = "cell_type",
+           cell_barcode_column = "cell_barcode",
+           contrast_column = "disease",
+           contrast_ref_group = "Control",
+           contrast_alt_group = "Disease",
+           count_file = "count_mat.mtx",
            cluster = "AT1",
            covars = c("Age","Sex"),
            simulation_type = "de",
