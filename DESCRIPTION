@@ -17,7 +17,7 @@ Imports:
     methods,
     stats,
     utils,
-    data.table (>= 1.13.0),
+    data.table (>= 1.12.8),
     glue (>= 1.4.1),
     dplyr (>= 1.0.7),
     SingleCellExperiment (>= 1.4.1),
