@@ -34,7 +34,7 @@ Imports:
     foreach (>= 1.5.0),
     doMC (>= 1.3.6),
     biomaRt (>= 2.38.0),
-    emmeans (>= 1.4.8),
+    emmeans (>= 1.4.6),
     roxygen2 (>= 7.0.2),
     nebula (>= 1.1.5),
     EnsDb.Hsapiens.v86 (>= 2.99.0),
