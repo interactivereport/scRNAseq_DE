@@ -19,7 +19,7 @@ Imports:
     utils,
     data.table (>= 1.12.8),
     glue (>= 1.4.1),
-    dplyr (>= 1.0.7),
+    dplyr (>= 1.0.3),
     SingleCellExperiment (>= 1.4.1),
     edgeR (>= 3.24.3),
     DESeq2 (>= 1.22.2),
