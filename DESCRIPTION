@@ -24,7 +24,7 @@ Imports:
     edgeR (>= 3.24.3),
     DESeq2 (>= 1.22.2),
     apeglm (>= 1.4.2),
-    glmmTMB (>= 1.0.2.1),
+    glmmTMB (>= 1.0.1),
     BiocParallel (>= 1.16.6),
     Seurat (>= 3.0.2),
     MAST (>= 1.8.2),
