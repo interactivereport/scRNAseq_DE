@@ -1,0 +1,126 @@
+---
+title: "Introduction to scDEpipelineR6"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{1. Introduction to scDEpipelineR6}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+options(rmarkdown.html_vignette.check_title = FALSE)
+```
+
+## Introduction
+
+scDEpipelineR6 is an R package for single cell differential gene exprssion analysis on single cell RNA-sequencing data. Currently this package can ingest count matrices as rds files, matrix market files, and single cell experiment files. Cell-level metadata is also required in order to use the package.
+
+## Install package
+```{r install_package, echo=T}
+library(devtools)
+devtools::install_github("interactivereport/scRNAseq_DE")
+```
+
+## Example data preparation
+
+The ideal dataset for this package would be a multi-sample dataset that includes annotated cell types or clusters, and also includes sample-level covariate metadata.  The example data we will use is the pbmc_small Seurat object from the Seurat package.  In this section, we will prepare example data as if it had been captured according to this ideal scenario, although we will not include sample-level covariate information for this vignette.
+
+```{r load_data, echo=T}
+require(scDEpipelineR6)
+require(Seurat)
+
+#You will need some single cell data to use in your analysis
+data(pbmc_small)
+
+#The DE pipeline allows multiple data input types, for our example we load a count matrix and cell metadata
+count_mtx <- pbmc_small@assays$RNA@counts
+
+meta_cell <- pbmc_small@meta.data
+
+#Create a sample column
+meta_cell$idx <- 1:nrow(meta_cell)
+meta_cell$samp_col <- paste0("samp_",as.numeric(cut(meta_cell$idx, 8)))
+
+```
+
+## Usage
+
+### Filtering
+
+There are filtering options available to use on your data when loading into the R6 pipeline.  The filters operate in two rounds, the first round operates on the entire dataset, and the second round operates on each contrast group for your cluster of interest.
+
+```{r r6_filter, echo=T}
+#Create your sce object
+sce <- BiostatsSingleCell$new(count_data = count_mtx,
+                              meta_data = meta_cell,
+                              sampleId_col = "samp_col",
+                              cluster_col = "letter.idents",
+                              treatment_col = "groups")
+
+#Apply a first round filter
+sce$apply_filter(min.perc.cells.per.gene = 0.01)
+
+#Set up a group contrast
+sce$set_group_mode(cluster_of_interest = "A", ref_group = "g1", alt_group = "g2")
+
+#Set up a second round filter, lower the number of cells required per subject to 3
+sce_qc <- sce$apply_filter_contrasts_R6(min.cells.per.gene = 3, min.perc.cells.per.gene = 0.1, perc.cells.filter = T,
+                                                        min.cells.per.gene.type = "or", cells.per.gene.filter = T,
+                                                        perc.filter = F, perc.filter.type = "and", perc_threshold = 0.75,
+                                                        min.ave.pseudo.bulk.cpm = 1, pseudo.bulk.cpm.filter = F, min.cells.per.subj = 3)
+sce_qc
+```
+
+### DE analysis
+
+Data loaded into the R6 pipeline can be analyzed using any of the available DE methods.  Here, we will run the NEBULA HL method.
+
+```{r de_analysis, echo=T}
+#Run a DE analysis of your choosing on your filtered data
+#Here we will run nebula (HL method)
+nebula.HL_results = sce_qc$nebula_pipeline(covs = covars,method="HL")$res.tab
+head(nebula.HL_results)
+```
+
+### Simulation
+
+The package also contains a function to perform DE method benchmarking using simulations.  Here, we provide an example of the simulation function but we do not run the simulation within this vignette.  Please run the simulation using your data and refer to the simulation function documentation.
+
+```{r simulation, eval=FALSE}
+#Example simulation run (not evaluated)
+#Note that the simulation function requires data to be in 10X CellRanger v2 format
+#Pass the applicable arguments for the files you would like to run the simulation on into this function
+de_sim_result <- de_sim_v10(in_dir = "path_to_data",
+                           gene_info_file = "gene_info.csv",
+                           gene_name_column = "index",
+                           meta_file = "metadata.csv",
+                           sample_column = "sample",
+                           cell_type_column = "cell_type",
+                           cell_barcode_column = "cell_barcode",
+                           contrast_column = "disease",
+                           contrast_ref_group = "Control",
+                           contrast_alt_group = "Disease",
+                           count_file = "count_mat.mtx",
+                           cluster = "A",
+                           covars = c("Age","Sex"),
+                           simulation_type = "de",
+                           fc_estimate = TRUE,
+                           simulation_mode = 3,
+                           fc=1.5,
+                           pDE=0.15,
+                           nSim.subjects = 8,
+                           n_simulation=50,
+                           main_seed=2021,
+                           percentage.cell=1.00,
+                           minimum.cells.per.gene.type = "and",
+                           minimum.cells.per.subject = 5,
+                           sim_cores = 5,
+                           de_methods = c('nebula_HL'),
+                           sim_seed_mode = "seed_mode",
+                           simulation_seeds = c(451268, 783780, 709681)
+                           )
+```
