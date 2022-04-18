@@ -20,7 +20,8 @@ options(rmarkdown.html_vignette.check_title = FALSE)
 scDEpipelineR6 is an R package for single cell differential gene exprssion analysis on single cell RNA-sequencing data. Currently this package can ingest count matrices as rds files, matrix market files, and single cell experiment files. Cell-level metadata is also required in order to use the package.
 
 ## Install package
-```{r install_package, echo=T}
+```{r install_package, eval=FALSE, echo=T}
+#Install the package before using the vignette, see this code block.
 library(devtools)
 devtools::install_github("interactivereport/scRNAseq_DE")
 ```
@@ -30,7 +31,7 @@ devtools::install_github("interactivereport/scRNAseq_DE")
 The ideal dataset for this package would be a multi-sample dataset that includes annotated cell types or clusters, and also includes sample-level covariate metadata.  The example data we will use is the pbmc_small Seurat object from the Seurat package.  In this section, we will prepare example data as if it had been captured according to this ideal scenario, although we will not include sample-level covariate information for this vignette.
 
 ```{r load_data, echo=T}
-require(scDEpipelineR6)
+suppressWarnings(require(scDEpipelineR6))
 require(Seurat)
 
 #You will need some single cell data to use in your analysis
@@ -40,6 +41,9 @@ data(pbmc_small)
 count_mtx <- pbmc_small@assays$RNA@counts
 
 meta_cell <- pbmc_small@meta.data
+
+#Create a cell column
+meta_cell$cell <- rownames(meta_cell)
 
 #Create a sample column
 meta_cell$idx <- 1:nrow(meta_cell)
@@ -62,16 +66,19 @@ sce <- BiostatsSingleCell$new(count_data = count_mtx,
                               treatment_col = "groups")
 
 #Apply a first round filter
-sce$apply_filter(min.perc.cells.per.gene = 0.01)
+sce$apply_filter(MTfilter = TRUE, lib_size_low = 0, lib_size_high = 20*10^6,
+                 min.cells.per.gene = 1, min.genes.per.cell = 10,
+                 perc_filter = FALSE
+                 )
 
 #Set up a group contrast
 sce$set_group_mode(cluster_of_interest = "A", ref_group = "g1", alt_group = "g2")
 
 #Set up a second round filter, lower the number of cells required per subject to 3
 sce_qc <- sce$apply_filter_contrasts_R6(min.cells.per.gene = 3, min.perc.cells.per.gene = 0.1, perc.cells.filter = T,
-                                                        min.cells.per.gene.type = "or", cells.per.gene.filter = T,
-                                                        perc.filter = F, perc.filter.type = "and", perc_threshold = 0.75,
-                                                        min.ave.pseudo.bulk.cpm = 1, pseudo.bulk.cpm.filter = F, min.cells.per.subj = 3)
+                                        min.cells.per.gene.type = "or", cells.per.gene.filter = T,
+                                        perc.filter = F, perc.filter.type = "and", perc_threshold = 0.75,
+                                        min.ave.pseudo.bulk.cpm = 1, pseudo.bulk.cpm.filter = F, min.cells.per.subj = 3)
 sce_qc
 ```
 
@@ -82,7 +89,7 @@ Data loaded into the R6 pipeline can be analyzed using any of the available DE m
 ```{r de_analysis, echo=T}
 #Run a DE analysis of your choosing on your filtered data
 #Here we will run nebula (HL method)
-nebula.HL_results = sce_qc$nebula_pipeline(covs = covars,method="HL")$res.tab
+nebula.HL_results = sce_qc$nebula_pipeline(method="HL")$res.tab
 head(nebula.HL_results)
 ```
 
