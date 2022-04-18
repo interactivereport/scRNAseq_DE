@@ -86,7 +86,7 @@ devtools::install_github("interactivereport/scRNAseq_DE")
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Vignette work in progress for example usage.
+This package contains an introductory vignette that shows the usage of the DE method pipeline, and an example of the call to the DE benchmarking simulation function.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
