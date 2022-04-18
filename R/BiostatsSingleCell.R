@@ -30,6 +30,7 @@
 #'
 #' @details
 #' All of the components of the dataset are held within the R6 Class
+#' @export
 BiostatsSingleCell =
   R6::R6Class("BiostatsSingleCell",
               private = list(
