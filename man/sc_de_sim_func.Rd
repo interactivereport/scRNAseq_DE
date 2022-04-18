@@ -41,6 +41,8 @@ sc_de_sim_func(
 
 \item{gene_info_file}{The filename of the gene info file, csv format}
 
+\item{gene_name_column}{The name of the column containing unique gene identifiers in the gene info file}
+
 \item{meta_file}{The filename of the cell metadata file, csv format}
 
 \item{sample_column}{The name of the sample column in the metadata file}

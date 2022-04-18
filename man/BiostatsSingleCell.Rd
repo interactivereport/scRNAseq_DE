@@ -49,6 +49,7 @@ All of the components of the dataset are held within the R6 Class
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Creates a biostats single cell object which supports multi-sample sc/sn RNAseq dataset
 \subsection{Usage}{
@@ -110,6 +111,7 @@ a new \code{BiostatsSingleCell} R6 object containing counts, cells, genes, meta 
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-make_QCplots"></a>}}
+\if{latex}{\out{\hypertarget{method-make_QCplots}{}}}
 \subsection{Method \code{make_QCplots()}}{
 Creates a number of QC plots for the sc/snRNAseq data
 \subsection{Usage}{
@@ -129,6 +131,7 @@ None
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-apply_filter"></a>}}
+\if{latex}{\out{\hypertarget{method-apply_filter}{}}}
 \subsection{Method \code{apply_filter()}}{
 Applies the 1st round of biostats filtering pipeline.  Note that this filter is applied to all cells of the experiment.
 \subsection{Usage}{
@@ -166,6 +169,7 @@ None: This function will filter your R6 object in-place.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-apply_filter_R6"></a>}}
+\if{latex}{\out{\hypertarget{method-apply_filter_R6}{}}}
 \subsection{Method \code{apply_filter_R6()}}{
 Applies the 1st round of biostats filtering pipeline. Note that this filter is applied to all cells of the experiment.
 \subsection{Usage}{
@@ -203,6 +207,7 @@ a new R6 object representing the data after one round of filtering
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-subset"></a>}}
+\if{latex}{\out{\hypertarget{method-subset}{}}}
 \subsection{Method \code{subset()}}{
 Subsets your R6 object based on a provided condition.
 \subsection{Usage}{
@@ -226,6 +231,7 @@ An R6 object
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-down_sample"></a>}}
+\if{latex}{\out{\hypertarget{method-down_sample}{}}}
 \subsection{Method \code{down_sample()}}{
 Downsamples cells to a specified number
 \subsection{Usage}{
@@ -249,6 +255,7 @@ R6 object with downsampled counts and meta data
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-set_group_mode"></a>}}
+\if{latex}{\out{\hypertarget{method-set_group_mode}{}}}
 \subsection{Method \code{set_group_mode()}}{
 Sets DE analysis to "group" mode (i.e. comparing groups within a specified cell type)
 \subsection{Usage}{
@@ -272,6 +279,7 @@ None
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-set_cluster_mode"></a>}}
+\if{latex}{\out{\hypertarget{method-set_cluster_mode}{}}}
 \subsection{Method \code{set_cluster_mode()}}{
 Sets DE analysis to "cluster" mode (i.e. comparing clusters/cell types within a specific group)
 \subsection{Usage}{
@@ -299,6 +307,7 @@ None
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-apply_filter_contrasts_R6"></a>}}
+\if{latex}{\out{\hypertarget{method-apply_filter_contrasts_R6}{}}}
 \subsection{Method \code{apply_filter_contrasts_R6()}}{
 Apply the 2nd round of biostats filtering.  For "group" mode, the filtering is applied to \code{ref_group} and \code{alt_group} for the given cell type of interest.
 For "cluster" mode, the filtering is applied to \code{ref_cluster} and \code{alt_cluster} for a given group of interest.
@@ -351,6 +360,7 @@ A new R6 object with the filtered counts and the filtered meta data.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-t_test_pipeline"></a>}}
+\if{latex}{\out{\hypertarget{method-t_test_pipeline}{}}}
 \subsection{Method \code{t_test_pipeline()}}{
 Runs the pseudo-bulk DE t-test pipeline
 \subsection{Usage}{
@@ -363,6 +373,7 @@ A data frame of DE results
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ancova_pipeline"></a>}}
+\if{latex}{\out{\hypertarget{method-ancova_pipeline}{}}}
 \subsection{Method \code{ancova_pipeline()}}{
 Runs the pseudo-bulk ancova pipeline
 \subsection{Usage}{
@@ -382,6 +393,7 @@ A data frame of DE results
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-u_test_pipeline"></a>}}
+\if{latex}{\out{\hypertarget{method-u_test_pipeline}{}}}
 \subsection{Method \code{u_test_pipeline()}}{
 Runs the pseudo-bulk u-test DE pipeline
 \subsection{Usage}{
@@ -394,6 +406,7 @@ A data frame of DE results
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-edgeR_pipeline"></a>}}
+\if{latex}{\out{\hypertarget{method-edgeR_pipeline}{}}}
 \subsection{Method \code{edgeR_pipeline()}}{
 Runs the pseudo-bulk edgeR DE pipeline
 \subsection{Usage}{
@@ -413,6 +426,7 @@ A data frame of DE results
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-limma_pipeline"></a>}}
+\if{latex}{\out{\hypertarget{method-limma_pipeline}{}}}
 \subsection{Method \code{limma_pipeline()}}{
 Runs the pseudo-bulk limma DE pipeline
 \subsection{Usage}{
@@ -432,6 +446,7 @@ A data frame of DE results
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-limma_cell_level_pipeline"></a>}}
+\if{latex}{\out{\hypertarget{method-limma_cell_level_pipeline}{}}}
 \subsection{Method \code{limma_cell_level_pipeline()}}{
 Runs the cell-level limme DE pipeline
 \subsection{Usage}{
@@ -465,6 +480,7 @@ A data frame of DE results
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-DESeq2_pipeline"></a>}}
+\if{latex}{\out{\hypertarget{method-DESeq2_pipeline}{}}}
 \subsection{Method \code{DESeq2_pipeline()}}{
 Runs the pseudo-bulk DESeq2 pipeline
 \subsection{Usage}{
@@ -495,6 +511,7 @@ A data frame of DE results
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-nebula_pipeline"></a>}}
+\if{latex}{\out{\hypertarget{method-nebula_pipeline}{}}}
 \subsection{Method \code{nebula_pipeline()}}{
 Runs the nebula DE pipeline
 \subsection{Usage}{
@@ -516,6 +533,7 @@ A data frame of DE results
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-glmmTMB_pipeline"></a>}}
+\if{latex}{\out{\hypertarget{method-glmmTMB_pipeline}{}}}
 \subsection{Method \code{glmmTMB_pipeline()}}{
 Runs the glmmTMB pipeline
 \subsection{Usage}{
@@ -549,6 +567,7 @@ A data frame of DE results
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-MAST_pipeline"></a>}}
+\if{latex}{\out{\hypertarget{method-MAST_pipeline}{}}}
 \subsection{Method \code{MAST_pipeline()}}{
 Runs the MAST pipeline
 \subsection{Usage}{
@@ -579,6 +598,7 @@ A data frame of DE results
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-violinPlot"></a>}}
+\if{latex}{\out{\hypertarget{method-violinPlot}{}}}
 \subsection{Method \code{violinPlot()}}{
 Creates a violin plot
 \subsection{Usage}{
@@ -621,6 +641,7 @@ A ggplot
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-volcanoPlot"></a>}}
+\if{latex}{\out{\hypertarget{method-volcanoPlot}{}}}
 \subsection{Method \code{volcanoPlot()}}{
 Creates a volcano plot
 \subsection{Usage}{
@@ -651,6 +672,7 @@ A ggplot
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-assayData"></a>}}
+\if{latex}{\out{\hypertarget{method-assayData}{}}}
 \subsection{Method \code{assayData()}}{
 Returns the count matrix slot of the R6 object
 \subsection{Usage}{
@@ -663,6 +685,7 @@ The sparse matrix representation of the counts
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-pseudoBulkData"></a>}}
+\if{latex}{\out{\hypertarget{method-pseudoBulkData}{}}}
 \subsection{Method \code{pseudoBulkData()}}{
 Returns the pseudobulk data slot of the R6 object
 \subsection{Usage}{
@@ -675,6 +698,7 @@ An R matrix of the pseudobulk data slot
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-pData"></a>}}
+\if{latex}{\out{\hypertarget{method-pData}{}}}
 \subsection{Method \code{pData()}}{
 Returns the meta data slot of the R6 object
 \subsection{Usage}{
@@ -687,6 +711,7 @@ An R data frame of the meta data
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-get_cells"></a>}}
+\if{latex}{\out{\hypertarget{method-get_cells}{}}}
 \subsection{Method \code{get_cells()}}{
 Return the cells slot of the R6 object
 \subsection{Usage}{
@@ -699,6 +724,7 @@ A vector of character strings of cell barcodes
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-get_genes"></a>}}
+\if{latex}{\out{\hypertarget{method-get_genes}{}}}
 \subsection{Method \code{get_genes()}}{
 Return the gene slot of the R6 object
 \subsection{Usage}{
@@ -711,6 +737,7 @@ A vector of character strings of gene names
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-get_MT"></a>}}
+\if{latex}{\out{\hypertarget{method-get_MT}{}}}
 \subsection{Method \code{get_MT()}}{
 Return the MT genes of the R6 object
 \subsection{Usage}{
@@ -723,6 +750,7 @@ vector of row indexes for MT genes
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-get_lib_sizes"></a>}}
+\if{latex}{\out{\hypertarget{method-get_lib_sizes}{}}}
 \subsection{Method \code{get_lib_sizes()}}{
 Return the library sizes of the R6 object
 \subsection{Usage}{
@@ -735,6 +763,7 @@ A numeric vector of library sizes
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-get_av_lib_size"></a>}}
+\if{latex}{\out{\hypertarget{method-get_av_lib_size}{}}}
 \subsection{Method \code{get_av_lib_size()}}{
 Return the average library size of the R6 object
 \subsection{Usage}{
@@ -747,6 +776,7 @@ A numeric vector of the average library size
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-get_norm_counts"></a>}}
+\if{latex}{\out{\hypertarget{method-get_norm_counts}{}}}
 \subsection{Method \code{get_norm_counts()}}{
 Return the normalized counts of the R6 object
 \subsection{Usage}{
@@ -759,6 +789,7 @@ normalized counts as a sparse matrix
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-get_DE_results"></a>}}
+\if{latex}{\out{\hypertarget{method-get_DE_results}{}}}
 \subsection{Method \code{get_DE_results()}}{
 Return the DE pipeline results
 \subsection{Usage}{
@@ -771,6 +802,7 @@ a list of DE result data frames for each DE pipeline that has been executed.  Ea
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-get_filter_info"></a>}}
+\if{latex}{\out{\hypertarget{method-get_filter_info}{}}}
 \subsection{Method \code{get_filter_info()}}{
 Returns a record of each gene that has been filtered out and why.
 \subsection{Usage}{
@@ -790,6 +822,7 @@ A list containing:
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{
