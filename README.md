@@ -45,6 +45,7 @@
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
+    <li><a href="#nebula">Nebula Output Note</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -90,6 +91,13 @@ This package contains an introductory vignette that shows the usage of the DE me
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
+<!-- NEBULA OUTPUT NOTE -->
+## Nebula Output Note
+
+When using scRNA-seq DE methods in the code pipeline_class.R, the output is an R data.frame for DE methods T-test, ANCOVA, U-test, EdgeR, limma-voom, limma-cell, DESeq2, glmmTMB, and MAST. The data.frame of DE results contains at minimum columns for the tested gene name, log2FC, pvalue, and adjusted p-value (FDR) for these DE methods.  
+In contrast, the output of DE results using the DE method NEBULA in pipeline_class.R is a list.  This list contains two elements with names ‘res.tab’ and ‘res.ls’.  The list element named ‘res.tab’ is an R data.frame similar to the output of the other DE methods in pipeline_class.R, and contains columns for the tested gene name, log2FC, pvalue, and FDR. 
+For convenience to the user, the ‘res.tab’ data.frame also contains additional information in four additional columns that are specific to the NEBULA DE method.  The first additional column is ‘algorithm’, which will output the NEBULA method used to test a gene.  If the NEBULA method was specified as ‘HL’, then all values in this column will be ‘HL’; otherwise, if the method used was set to ‘LN’, then the output will correspond to the NEBULA method used for a specific tested gene. The ‘convergence’ column corresponds to the convergence of the algorithm. Briefly, a value in the ‘convergence’ column of ‘-20’ or ‘-30’ could indicate a failure of the algorithm for the tested gene.   For more information on convergence, please refer to the NEBULA publication [https://www.nature.com/articles/s42003-021-02146-6](https://www.nature.com/articles/s42003-021-02146-6).  The ‘DE_quality_score’ column is equal to the ratio of the tested gene mean counts per sample divided by the estimated cell-level overdispersion.  The ‘DE_quality_score’ ratio is intended to be a metric that corresponds to the true positive reliability of a DEG.  The ‘DE_quality_indicator’ column is used to flag if the row value of the ‘DE_quality_score’ column is below 20, which may indicate an unreliable DEG result.
+The second element in the NEBULA DE result list, named ‘res.ls’, contains the raw output list from running the NEBULA function.  For more information on the ‘res.ls’ list and the definition of the objects in that list, please refer to the NEBULA function source documentation [https://github.com/lhe17/nebula](https://github.com/lhe17/nebula).
 
 <!-- CONTRIBUTING -->
 ## Contributing
